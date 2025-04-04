@@ -28,10 +28,10 @@ class FormAdapter
         unset($options['method'], $options['route'], $options['files']);
 
         $form = html();
-        if (is_array($route)) {
+        if (is_array($route) && count($route)) {
             $action = array_shift($route);
             $form = $form->form($method, route($action, $route));
-        } else if ($route !== '') {
+        } elseif ($route != null && $route != [] && $route != '') {
             $form = $form->form($method, route($route));
         } else {
             $form = $form->form($method);
