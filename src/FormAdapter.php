@@ -18,13 +18,16 @@ class FormAdapter
     public function open(array $options = [])
     {
         $method = array_key_exists('method', $options) ? $options['method'] : 'POST';
-        $route = array_key_exists('route', $options) ? $options['route'] : '';
+        $route = array_key_exists('route', $options)
+            ? $options['route']
+            : (array_key_exists('url', $options)
+                ? $options['url']
+                : '');
         $files = array_key_exists('files', $options) ? $options['files'] : false;
 
         unset($options['method'], $options['route'], $options['files']);
 
         $form = html();
-
         if (is_array($route) && count($route)) {
             $action = array_shift($route);
             $form = $form->form($method, route($action, $route));
